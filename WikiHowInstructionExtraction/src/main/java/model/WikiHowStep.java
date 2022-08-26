@@ -25,6 +25,10 @@ public class WikiHowStep {
         return headline;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     public ArrayList<String> getCategories() {
         return method.getArticle().getCategories();
     }

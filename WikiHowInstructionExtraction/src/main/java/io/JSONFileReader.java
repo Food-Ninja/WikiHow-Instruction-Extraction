@@ -1,5 +1,7 @@
-package controller;
+package io;
 
+import analysis.ImageAndVideoCounter;
+import analysis.VerbOccurrencePrinter;
 import model.WikiHowArticle;
 import model.WikiHowMethod;
 import model.WikiHowStep;
@@ -61,14 +63,18 @@ public class JSONFileReader {
         JSONArray categories = (JSONArray) file.get("category_hierarchy");
         String articleTitle = (String) file.get("title");
         String articleDescription = (String) file.get("title_description");
-        WikiHowArticle article = new WikiHowArticle(articleTitle, articleDescription);
+        String video = (String) file.get("video");
+        WikiHowArticle article = new WikiHowArticle(articleTitle, articleDescription, video);
         article.addCategories(categories);
+        ImageAndVideoCounter.countIfArticleHasVideo(article);
+        VerbOccurrencePrinter.analyzeSearchTermOccurrenceInArticle(article);
 
         JSONArray methods = (JSONArray) file.get("methods");
         for(int m = 0; m < methods.size(); m++) {
             JSONObject methodObj = (JSONObject) methods.get(m);
             String methodName = (String) methodObj.get("name");
             WikiHowMethod method = new WikiHowMethod(m, methodName, article);
+            VerbOccurrencePrinter.analyzeSearchTermOccurrenceInMethod(method);
 
             JSONArray steps = (JSONArray) methodObj.get("steps");
             for(int s = 0; s < steps.size(); s++) {
@@ -76,10 +82,12 @@ public class JSONFileReader {
                 String headline = (String) stepObj.get("headline");
                 String desc = (String) stepObj.get("description");
                 String imgFile = (String) stepObj.get("img");
+                WikiHowStep step = new WikiHowStep(s, headline, desc, imgFile, method);
+                VerbOccurrencePrinter.analyzeSearchTermOccurrenceInStep(step);
+
                 if (!GlobalSettings.ONLY_CATEGORY_FILTER && !OccurrenceChecker.checkOccurrence(desc)) {
                     continue;
                 }
-                WikiHowStep step = new WikiHowStep(s, headline, desc, imgFile, method);
                 stepsInFile.add(step);
             }
         }

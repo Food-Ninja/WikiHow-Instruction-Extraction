@@ -8,9 +8,9 @@ public class GlobalSettings {
     // true: search only for articles where any category == relevantCategoryAny
     public final static boolean ONLY_CATEGORY_FILTER = false;
     // true: the occurrences of the searchTerm in the different parts of the article are counted & printed
-    public final static boolean OCCURRENCE_PRINTING = false;
+    public final static boolean OCCURRENCE_PRINTING = true;
     // true: counts & prints the distribution of the searchTerm in the parent categories
-    public final static boolean CATEGORY_DISTRIBUTION = false;
+    public final static boolean CATEGORY_DISTRIBUTION = true;
     // true: the general overview consisting of title, categories, method name, step headline and
     // step description is visualized
     public final static boolean OVERVIEW_EXTRACTION = false;
@@ -23,13 +23,13 @@ public class GlobalSettings {
     // true: exclude all detailed results where the preposition is empty
     public final static boolean EXCLUDE_EMPTY_PREPOSITIONS = false;
     // true: count & print the usage of the different sentence parts in the detailed sentence results
-    public final static boolean SENTENCE_PARTS_ANALYSIS = false;
+    public final static boolean SENTENCE_PARTS_ANALYSIS = true;
     // true: count & print the distribution of the prepositions in the detailed sentence results
     public final static boolean PREPOSITION_DISTRIBUTION = true;
     // true: exclude the past tense of the search term for whatever reason (e.g. can be mistaken for adjective)
     public final static boolean EXCLUDE_PAST_TENSE = true;
     // true: count occurrences of images and videos in steps
-    public final static boolean IMAGE_VIDEO_COUNTER = false;
+    public final static boolean IMAGE_VIDEO_COUNTER = true;
     // true: use functionality provided by the Stanford CoreNLP API
     public final static boolean USE_STANFORD_NLP_API = true;
 
