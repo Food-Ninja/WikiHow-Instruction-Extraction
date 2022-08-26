@@ -2,7 +2,7 @@ package utils;
 
 public class GlobalSettings {
     // true: the results are printed as a JTable
-    public final static boolean VISUALIZE_RESULTS = false;
+    public final static boolean VISUALIZE_RESULTS = true;
     // true: all articles from the parent category != relevantCategoryParent are excluded from the results
     public final static boolean CATEGORY_EXCLUSION = true;
     // true: search only for articles where any category == relevantCategoryAny
