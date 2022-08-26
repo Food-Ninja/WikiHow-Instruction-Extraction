@@ -4,7 +4,7 @@ import model.ExtractedInstruction;
 import model.VerbUsageSentence;
 import org.json.simple.JSONObject;
 import utils.GlobalSettings;
-import utils.SupportingToolkit;
+import utils.OccurrenceChecker;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,26 +151,26 @@ public class Analyzer {
     }
 
     public void analyzeVerbOccurrenceInJSONTitleAndDescription(JSONObject file) {
-        if(SupportingToolkit.checkOccurrence((String)file.get("title"))) {
+        if(OccurrenceChecker.checkOccurrence((String)file.get("title"))) {
             titleCounter++;
         }
 
-        if(SupportingToolkit.checkOccurrence(((String)file.get("title_description")))) {
+        if(OccurrenceChecker.checkOccurrence(((String)file.get("title_description")))) {
             titleDescCounter++;
         }
     }
 
     public void analyzeVerbOccurrenceInJSONMethod(JSONObject method) {
-        if (SupportingToolkit.checkOccurrence((String) method.get("name"))) {
+        if (OccurrenceChecker.checkOccurrence((String) method.get("name"))) {
             methodCounter++;
         }
     }
 
     public void analyzeVerbOccurrenceInJSONStep(JSONObject step) {
-        if (SupportingToolkit.checkOccurrence((String) step.get("headline"))) {
+        if (OccurrenceChecker.checkOccurrence((String) step.get("headline"))) {
             stepHeadlineCounter++;
         }
-        if (SupportingToolkit.checkOccurrence((String) step.get("description"))) {
+        if (OccurrenceChecker.checkOccurrence((String) step.get("description"))) {
             stepDescCounter++;
         }
     }

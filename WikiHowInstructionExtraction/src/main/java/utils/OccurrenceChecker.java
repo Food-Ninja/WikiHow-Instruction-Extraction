@@ -2,7 +2,7 @@ package utils;
 
 import java.util.Arrays;
 
-public class SupportingToolkit {
+public class OccurrenceChecker {
     public static boolean checkOccurrence(String toCheck) {
         if(toCheck == null || toCheck.isEmpty()) {
             return false;

@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import utils.GlobalSettings;
 import utils.PoSTagger;
-import utils.SupportingToolkit;
+import utils.OccurrenceChecker;
 
 import java.io.File;
 import java.io.FileReader;
@@ -137,7 +137,7 @@ public class JSONFileReader {
 
                 String instruction = (String) stepObj.get("headline");
                 String desc = (String) stepObj.get("description");
-                if (!GlobalSettings.ONLY_CATEGORY_FILTER && !SupportingToolkit.checkOccurrence(desc)) {
+                if (!GlobalSettings.ONLY_CATEGORY_FILTER && !OccurrenceChecker.checkOccurrence(desc)) {
                     continue;
                 }
                 analyzer.countIfStepHasWorkingImage(stepObj);
@@ -172,7 +172,7 @@ public class JSONFileReader {
             for (Object step : steps) {
                 JSONObject stepObj = (JSONObject) step;
                 String desc = (String) stepObj.get("description");
-                if (!SupportingToolkit.checkOccurrence(desc)) {
+                if (!OccurrenceChecker.checkOccurrence(desc)) {
                     continue;
                 }
                 analyzer.countIfStepHasWorkingImage(stepObj);
@@ -180,7 +180,7 @@ public class JSONFileReader {
                 ArrayList<VerbUsageSentence> results = splitSentencesInParts(splitUpStepDescription(desc));
                 if(GlobalSettings.FILTER_SENTENCE) {
                     sentences.addAll(results.stream().filter(s ->
-                            SupportingToolkit.doesWordOccurInSentence(GlobalSettings.sentenceFilterTerm,
+                            OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.sentenceFilterTerm,
                                     s.getSentence())).toList());
                 } else {
                     sentences.addAll(results);
@@ -230,7 +230,7 @@ public class JSONFileReader {
         }
 
         // return all sentences that contain the action verb
-        gluedSent.removeAll(gluedSent.stream().filter(s -> !SupportingToolkit.checkOccurrence(s)).toList());
+        gluedSent.removeAll(gluedSent.stream().filter(s -> !OccurrenceChecker.checkOccurrence(s)).toList());
         return gluedSent;
     }
 
@@ -314,12 +314,12 @@ public class JSONFileReader {
             }
 
             if(GlobalSettings.FILTER_TARGET &&
-                    !SupportingToolkit.doesWordOccurInSentence(GlobalSettings.targetFilterTerm, obj.toString())) {
+                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.targetFilterTerm, obj.toString())) {
                 //obj.toString().trim().isEmpty()) {
                 continue;
             }
             if(GlobalSettings.FILTER_LOCATION &&
-                    !SupportingToolkit.doesWordOccurInSentence(GlobalSettings.locationFilterTerm, loc.toString())) {
+                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.locationFilterTerm, loc.toString())) {
                 //!loc.toString().trim().isEmpty()) {
                 continue;
             }
