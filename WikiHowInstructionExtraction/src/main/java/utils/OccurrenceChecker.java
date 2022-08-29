@@ -16,4 +16,20 @@ public class OccurrenceChecker {
         String[] words = sentence.toLowerCase().split(" ");
         return Arrays.asList(words).contains(word);
     }
+
+    public static int getVerbLocationInSentenceChars(String sent) {
+        int verbLocation = sent.indexOf(GlobalSettings.searchTerm);
+        if(verbLocation == -1) {
+            if(!GlobalSettings.EXCLUDE_PAST_TENSE) {
+                verbLocation = sent.indexOf(GlobalSettings.searchTermPast);
+            }
+            if(verbLocation == -1) {
+                verbLocation = sent.indexOf(GlobalSettings.searchTermParticiple);
+                if(verbLocation == -1) {
+                    verbLocation = 0;
+                }
+            }
+        }
+        return verbLocation;
+    }
 }

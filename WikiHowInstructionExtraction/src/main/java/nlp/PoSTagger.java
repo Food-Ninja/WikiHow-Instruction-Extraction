@@ -1,12 +1,13 @@
-package utils;
+package nlp;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import utils.GlobalSettings;
 
 import java.util.Arrays;
 
 public class PoSTagger {
 
-    private static final String POS_PREPOSITION_TAG = "IN";
+    private static final String PREPOSITION_TAG = "IN";
 
     private static MaxentTagger tagger;
 
@@ -17,22 +18,22 @@ public class PoSTagger {
         tagger = new MaxentTagger("edu/stanford/nlp/models/pos-tagger/english-left3words-distsim.tagger");
     }
 
-    public static String getFirstPrepositionAfterWord(int wordLoc, String sentence) {
+    public static int getPositionOfFirstPreposition(String sentence) {
         String tag = tagger.tagString(sentence);
         String[] tagsPerWord = tag.split("\\s+");
-        for(int i = wordLoc; i < tagsPerWord.length; i++) {
+        for(int i = 1; i < tagsPerWord.length; i++) {
             String[] wordTagPair = tagsPerWord[i].split("_");
-            if(wordTagPair[1].equals(POS_PREPOSITION_TAG)) {
+            if(wordTagPair[1].equals(PREPOSITION_TAG)) {
                 if(GlobalSettings.EXCLUDE_PREPOSITIONS) {
                     if(Arrays.stream(prepositions).anyMatch(wordTagPair[0]::equalsIgnoreCase)) {
-                        return wordTagPair[0];
+                        return i;
                     }
                 } else {
-                    return wordTagPair[0];
+                    return i;
                 }
             }
         }
 
-        return "";
+        return -1;
     }
 }

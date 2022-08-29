@@ -36,9 +36,9 @@ public class GlobalSettings {
     public final static String searchTerm = "dice";
     public final static String searchTermPast = "diced";
     public final static String searchTermParticiple = "dicing";
-    public final static String targetFilterTerm = "potatoes";
+    public final static String targetFilterTerm = "";
     public final static String locationFilterTerm = "";
-    public final static String sentenceFilterTerm = "off";
+    public final static String sentenceFilterTerm = "";
     public final static String relevantCategoryParent = "Food and Entertaining";
     public final static String relevantCategoryAny = "Food Cutting Techniques";
 }

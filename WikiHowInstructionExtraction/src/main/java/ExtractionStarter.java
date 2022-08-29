@@ -6,8 +6,8 @@ import io.ResultVisualizer;
 import model.DeconstructedStepSentence;
 import model.WikiHowStep;
 import utils.GlobalSettings;
-import utils.PoSTagger;
-import utils.SentenceExtractor;
+import nlp.PoSTagger;
+import nlp.SentencePartsExtractor;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class ExtractionStarter {
 
         ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
         if(!GlobalSettings.OVERVIEW_EXTRACTION) {
-            sentences = SentenceExtractor.deconstructStepsIntoSentenceParts(steps);
+            sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps);
             callSentenceAnalyzers(sentences);
             System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchTerm + "\"" +
                     (GlobalSettings.FILTER_TARGET ? " and \"" + GlobalSettings.targetFilterTerm + "\"" : "") +
