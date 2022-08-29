@@ -8,9 +8,6 @@ import java.util.Arrays;
 
 public class SentenceExtractor {
 
-    public final static String[] prepositions = new String[]{"over", "under", "in", "into", "inside", "on", "onto",
-            "down", "through", "out", "off", "up"};
-
     public final static String[] targetObjectBeginners = new String[]{"the", "a", "your", "them", "it", "enough"};
 
     public static ArrayList<DeconstructedStepSentence> deconstructStepsIntoSentenceParts(ArrayList<WikiHowStep> steps) {
@@ -100,28 +97,20 @@ public class SentenceExtractor {
             removedVerb = removedVerb.replace(GlobalSettings.searchTerm, "");
 
             String[] words = removedVerb.split(" ");
-            String prep = "";
+            String prep;
             int prepPos = -1;
             StringBuilder loc = new StringBuilder();
             StringBuilder obj = new StringBuilder();
-            if(GlobalSettings.USE_STANFORD_NLP_API) {
-                prep = PoSTagger.getFirstPrepositionAfterWord(verbLocation, removedVerb);
-                if(!prep.isEmpty()) {
-                    for(int i = verbLocation; i < words.length; i++) {
-                        if(words[i].equals(prep)) {
-                            prepPos = i;
-                        }
-                    }
-                }
-            } else {
-                for(int i = verbLocation + 1; i < words.length; i++) {
-                    if(Arrays.stream(prepositions).anyMatch(words[i]::equalsIgnoreCase)) {
+
+            prep = PoSTagger.getFirstPrepositionAfterWord(verbLocation, removedVerb);
+            if(!prep.isEmpty()) {
+                for(int i = verbLocation; i < words.length; i++) {
+                    if(words[i].equals(prep)) {
                         prepPos = i;
-                        prep = words[prepPos];
-                        break;
                     }
                 }
             }
+
             if(prepPos >= 0) {
                 for(int j = verbLocation; j < prepPos; j++) {
                     obj.append(words[j]).append(" ");

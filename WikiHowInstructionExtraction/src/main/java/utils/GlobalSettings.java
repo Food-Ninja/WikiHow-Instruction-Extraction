@@ -30,8 +30,8 @@ public class GlobalSettings {
     public final static boolean EXCLUDE_PAST_TENSE = true;
     // true: count occurrences of images and videos in steps
     public final static boolean IMAGE_VIDEO_COUNTER = true;
-    // true: use functionality provided by the Stanford CoreNLP API
-    public final static boolean USE_STANFORD_NLP_API = true;
+    // true: only allow prepositions that are summarized in the prepositions array in the PoSTagger
+    public final static boolean EXCLUDE_PREPOSITIONS = true;
 
     public final static String searchTerm = "dice";
     public final static String searchTermPast = "diced";
