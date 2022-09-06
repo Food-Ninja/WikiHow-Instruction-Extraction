@@ -5,6 +5,7 @@ import io.JSONFileReader;
 import io.ResultVisualizer;
 import model.DeconstructedStepSentence;
 import model.WikiHowStep;
+import nlp.CoreferenceResolver;
 import utils.GlobalSettings;
 import nlp.PoSTagger;
 import nlp.SentencePartsExtractor;
@@ -29,6 +30,7 @@ public class ExtractionStarter {
         ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
         if(!GlobalSettings.OVERVIEW_EXTRACTION) {
             sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps);
+            CoreferenceResolver.resolveCoreferences(sentences);
             callSentenceAnalyzers(sentences);
             System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchTerm + "\"" +
                     (GlobalSettings.FILTER_TARGET ? " and \"" + GlobalSettings.targetFilterTerm + "\"" : "") +
@@ -62,6 +64,8 @@ public class ExtractionStarter {
         if(!GlobalSettings.OVERVIEW_EXTRACTION) {
             sentenceAnalyzers.add(new MeasurementOccurrencePrinter());
         }
+
+        sentenceAnalyzers.add(new CoreferenceAnalyzer());
     }
 
     private static void callStepAnalyzers(ArrayList<WikiHowStep> steps) {

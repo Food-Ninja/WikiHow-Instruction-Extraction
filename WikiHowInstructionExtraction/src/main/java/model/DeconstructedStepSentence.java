@@ -4,7 +4,7 @@ public class DeconstructedStepSentence {
     private final int orderNo;
     private final String verb;
     private final String preposition;
-    private final String beforePrep;
+    private String beforePrep;
     private final String afterPrep;
     private final String completeSentence;
     private final WikiHowStep step;
@@ -37,5 +37,9 @@ public class DeconstructedStepSentence {
 
     public String getCompleteSentence() {
         return completeSentence;
+    }
+
+    public void setBeforePrep(String beforePrep) {
+        this.beforePrep = beforePrep;
     }
 }

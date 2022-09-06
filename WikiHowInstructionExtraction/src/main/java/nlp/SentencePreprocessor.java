@@ -69,11 +69,6 @@ public class SentencePreprocessor {
         ArrayList<String> gluedSent = new ArrayList<>();
         try {
             for(int i = 0; i < sentences.length; i++) {
-                // ignore empty strings that occur due to false use of multiple periods (..)
-                if(sentences[i].isEmpty()) {
-                    continue;
-                }
-
                 // since double measurements (like 2.5l) also use a period, we look for
                 // substrings that begin with a number (the number after the decimal point)
                 // and stitch them together with the last sentences already handled
