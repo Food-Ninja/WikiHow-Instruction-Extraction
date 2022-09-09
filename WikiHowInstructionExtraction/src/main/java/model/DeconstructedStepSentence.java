@@ -1,5 +1,7 @@
 package model;
 
+import java.util.regex.Pattern;
+
 public class DeconstructedStepSentence {
     private final int orderNo;
     private final String verb;
@@ -39,7 +41,13 @@ public class DeconstructedStepSentence {
         return completeSentence;
     }
 
-    public void setBeforePrep(String beforePrep) {
-        this.beforePrep = beforePrep;
+    public void replaceInBeforeSent(String toReplace, String with) {
+        this.beforePrep = beforePrep.replace(toReplace, with);
+    }
+
+    public boolean checkIfBeforeTextContainsGivenTerm(String term) {
+        String regexFilter = String.format("^(?=.*\\b%s\\b).*$", term.toLowerCase());
+        Pattern regexPattern = Pattern.compile(regexFilter, Pattern.MULTILINE);
+        return regexPattern.matcher(beforePrep.toLowerCase()).find();
     }
 }

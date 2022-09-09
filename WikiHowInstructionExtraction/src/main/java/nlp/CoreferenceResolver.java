@@ -21,8 +21,14 @@ public class CoreferenceResolver {
         pipeline = new StanfordCoreNLP(props);
 
         for(DeconstructedStepSentence sent : sentences) {
-            if(Arrays.stream(coreferenceWords).anyMatch(sent.getBeforePrep()::equalsIgnoreCase)) {
-                sent.setBeforePrep(resolveCoreference(sent));
+            for(String cor : coreferenceWords) {
+                if(sent.checkIfBeforeTextContainsGivenTerm(cor)) {
+                    String resolution = resolveCoreference(sent);
+                    System.out.println(String.format("Before: %s - Resolution: %s - Sentence: %s", sent.getBeforePrep(), resolution, sent.getCompleteSentence()));
+                    if(checkResolution(resolution)) {
+                        sent.replaceInBeforeSent(cor, resolution);
+                    }
+                }
             }
         }
     }
@@ -38,11 +44,17 @@ public class CoreferenceResolver {
 
             for (CorefChain.CorefMention mention : chain.getMentionsInTextualOrder()) {
                 if(Arrays.stream(coreferenceWords).anyMatch(mention.mentionSpan::equalsIgnoreCase)) {
-                    continue;
+                    if(mention.mentionSpan.equals("you")) {
+                        continue;
+                    }
+                    return chain.getRepresentativeMention().mentionSpan;
                 }
-                return mention.mentionSpan;
             }
         }
         return sent.getBeforePrep();
+    }
+
+    private static boolean checkResolution(String resolution) {
+        return PoSTagger.checkForNoun(resolution);
     }
 }
