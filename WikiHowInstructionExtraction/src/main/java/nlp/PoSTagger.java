@@ -23,6 +23,7 @@ public class PoSTagger {
     }
 
     public static int getPositionOfFirstPreposition(String sentence) {
+        sentence = preprocessSentence(sentence);
         String tag = tagger.tagString(sentence);
         String[] tagsPerWord = tag.split("\\s+");
         for(int i = 1; i < tagsPerWord.length; i++) {
@@ -51,5 +52,10 @@ public class PoSTagger {
             }
         }
         return false;
+    }
+
+    private static String preprocessSentence(String sent) {
+        sent = sent.replaceAll("-", "");
+        return sent;
     }
 }
