@@ -1,6 +1,6 @@
 package utils;
 
-import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class OccurrenceChecker {
     public static boolean checkOccurrence(String toCheck) {
@@ -13,8 +13,9 @@ public class OccurrenceChecker {
     }
 
     public static boolean doesWordOccurInSentence(String word, String sentence) {
-        String[] words = sentence.toLowerCase().split(" ");
-        return Arrays.asList(words).contains(word);
+        String regexFilter = String.format("^(?=.*\\b%s\\b).*$", word.toLowerCase());
+        Pattern regexPattern = Pattern.compile(regexFilter, Pattern.MULTILINE);
+        return regexPattern.matcher(sentence.toLowerCase()).find();
     }
 
     public static int getVerbLocationInSentenceChars(String sent) {

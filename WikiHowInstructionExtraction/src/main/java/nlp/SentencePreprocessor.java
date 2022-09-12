@@ -3,7 +3,9 @@ package nlp;
 import utils.OccurrenceChecker;
 
 import java.text.Normalizer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SentencePreprocessor {
 
@@ -118,7 +120,7 @@ public class SentencePreprocessor {
     }
 
     private static String cutGivenSentenceAtWord(String toCut, String word) {
-        if(!toCut.contains(word)) {
+        if(!OccurrenceChecker.doesWordOccurInSentence(word, toCut)) {
             return toCut;
         }
 

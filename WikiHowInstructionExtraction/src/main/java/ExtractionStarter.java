@@ -1,14 +1,12 @@
-// import analysis.Analyzer;
-
 import analysis.*;
 import io.JSONFileReader;
 import io.ResultVisualizer;
 import model.DeconstructedStepSentence;
 import model.WikiHowStep;
 import nlp.CoreferenceResolver;
-import utils.GlobalSettings;
 import nlp.PoSTagger;
 import nlp.SentencePartsExtractor;
+import utils.GlobalSettings;
 
 import java.util.ArrayList;
 
