@@ -29,7 +29,9 @@ public class SentencePreprocessor {
         description = description.replaceAll("(\\d)-(\\d)", "$1 to $2");
         description = description.replaceAll("[(].*?[)]", "");
         description = description.replaceAll("\\.\\.", ".");
+        description = description.replaceAll(";", "");
         description = description.replaceAll(" {2}", " ");
+        description = description.replaceAll("'ve", " have");
         return description;
     }
 

@@ -9,6 +9,8 @@ public class PoSTagger {
 
     private static final String PREPOSITION_TAG = "IN";
 
+    private static final String PARTICLE_TAG = "RP";
+
     private static final String NOUN_TAG = "NN";
 
     private static MaxentTagger tagger;
@@ -25,7 +27,7 @@ public class PoSTagger {
         String[] tagsPerWord = tag.split("\\s+");
         for(int i = 1; i < tagsPerWord.length; i++) {
             String[] wordTagPair = tagsPerWord[i].split("_");
-            if(wordTagPair[1].equals(PREPOSITION_TAG)) {
+            if(wordTagPair[1].equals(PREPOSITION_TAG) || wordTagPair[1].equals(PARTICLE_TAG)) {
                 if(GlobalSettings.EXCLUDE_PREPOSITIONS) {
                     if(Arrays.stream(prepositions).anyMatch(wordTagPair[0]::equalsIgnoreCase)) {
                         return i;
