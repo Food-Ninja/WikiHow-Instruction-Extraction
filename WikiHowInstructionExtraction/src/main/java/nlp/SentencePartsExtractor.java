@@ -31,7 +31,7 @@ public class SentencePartsExtractor {
             String verb = words[0];
 
             int prepPos = PoSTagger.getPositionOfFirstPreposition(sent);
-            String prep = prepPos == -1 ? "" : words[prepPos];
+            String prep = (prepPos < 0 || prepPos >= words.length) ? "" : words[prepPos];
             StringBuilder after = new StringBuilder();
             StringBuilder before = new StringBuilder();
 
