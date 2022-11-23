@@ -10,11 +10,11 @@ public class OccurrenceChecker {
             return false;
         }
 
-        if(!GlobalSettings.EXCLUDE_PAST_TENSE && doesWordOccurInSentence(GlobalSettings.searchTermPast, toCheck)) {
+        if(!GlobalSettings.EXCLUDE_PAST_TENSE && !GlobalSettings.searchVerb.doesPresentEqualPast() && doesWordOccurInSentence(GlobalSettings.searchVerb.past, toCheck)) {
             return PoSTagger.checkIfPastTenseIsVerb(toCheck);
         }
 
-        return doesWordOccurInSentence(GlobalSettings.searchTerm, toCheck) || doesWordOccurInSentence(GlobalSettings.searchTermParticiple, toCheck);
+        return doesWordOccurInSentence(GlobalSettings.searchVerb.present, toCheck) || doesWordOccurInSentence(GlobalSettings.searchVerb.participle, toCheck);
     }
 
     public static boolean doesWordOccurInSentence(String word, String sentence) {
@@ -24,11 +24,11 @@ public class OccurrenceChecker {
     }
 
     public static int getVerbLocationInSentenceChars(String sent) {
-        int verbLocation = sent.indexOf(GlobalSettings.searchTerm);
+        int verbLocation = sent.indexOf(GlobalSettings.searchVerb.present);
         if(verbLocation == -1) {
-            verbLocation = sent.indexOf(GlobalSettings.searchTermPast);
+            verbLocation = sent.indexOf(GlobalSettings.searchVerb.past);
             if(verbLocation == -1) {
-                verbLocation = sent.indexOf(GlobalSettings.searchTermParticiple);
+                verbLocation = sent.indexOf(GlobalSettings.searchVerb.participle);
                 if(verbLocation == -1) {
                     verbLocation = 0;
                 }

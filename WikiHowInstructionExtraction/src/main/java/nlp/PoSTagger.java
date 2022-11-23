@@ -50,7 +50,7 @@ public class PoSTagger {
             String word = wordTagPair[0];
             String tag = wordTagPair[1];
 
-            if(word.equals(GlobalSettings.searchTermPast)) {
+            if(word.equals(GlobalSettings.searchVerb.past)) {
                 if (Arrays.stream(VERB_TAGS).anyMatch(tag::equalsIgnoreCase)) {
                     return true;
                 }

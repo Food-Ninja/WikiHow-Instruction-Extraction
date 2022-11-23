@@ -22,7 +22,7 @@ public class ExtractionStarter {
         addAnalyzers();
 
         ArrayList<WikiHowStep> steps = reader.extractStepsFromFiles();
-        System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchTerm + "\"\n");
+        System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.present + "\"\n");
         callStepAnalyzers(steps);
 
         ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
@@ -30,7 +30,7 @@ public class ExtractionStarter {
             sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps);
             CoreferenceResolver.resolveCoreferences(sentences);
             callSentenceAnalyzers(sentences);
-            System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchTerm + "\"" +
+            System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.present + "\"" +
                     (GlobalSettings.FILTER_TARGET ? " and \"" + GlobalSettings.targetFilterTerm + "\"" : "") +
                     (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterTerm + "\"" : "") +
                     (GlobalSettings.FILTER_LOCATION ? " and \"" + GlobalSettings.locationFilterTerm + "\"" : ""));

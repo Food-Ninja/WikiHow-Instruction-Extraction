@@ -22,16 +22,12 @@ public class SentencePartAnalysis implements ISentenceAnalyzer {
         int verbParticipleCounter = 0;
 
         for(DeconstructedStepSentence sent : sentences) {
-            switch (sent.getVerb()) {
-                case GlobalSettings.searchTerm -> {
-                    verbCounter++;
-                }
-                case GlobalSettings.searchTermPast -> {
-                    verbPastCounter++;
-                }
-                case GlobalSettings.searchTermParticiple -> {
-                    verbParticipleCounter++;
-                }
+            if(sent.getVerb().equals(GlobalSettings.searchVerb.present)) {
+                verbCounter++;
+            } else if(sent.getVerb().equals(GlobalSettings.searchVerb.past)) {
+                verbPastCounter++;
+            } else if(sent.getVerb().equals(GlobalSettings.searchVerb.participle)) {
+                verbParticipleCounter++;
             }
             boolean hasPartAfterPrep = !sent.getAfterPrep().isEmpty();
             boolean hasPartBeforePrep = !sent.getBeforePrep().isEmpty();
@@ -62,9 +58,9 @@ public class SentencePartAnalysis implements ISentenceAnalyzer {
             }
         }
 
-        System.out.println("Usage of " + GlobalSettings.searchTerm + ": " + verbCounter);
-        System.out.println("Usage of " + GlobalSettings.searchTermPast + ": " + verbPastCounter);
-        System.out.println("Usage of " + GlobalSettings.searchTermParticiple + ": " + verbParticipleCounter + "\n");
+        System.out.println("Usage of " + GlobalSettings.searchVerb.present + ": " + verbCounter);
+        System.out.println("Usage of " + GlobalSettings.searchVerb.past + ": " + verbPastCounter);
+        System.out.println("Usage of " + GlobalSettings.searchVerb.participle + ": " + verbParticipleCounter + "\n");
 
         System.out.println("Before, Preposition & After specified: " + verbAllPartsCounter);
         System.out.println("Preposition & After specified: " + beforePrepMissingCounter);

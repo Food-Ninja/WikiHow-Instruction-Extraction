@@ -1,5 +1,7 @@
 package utils;
 
+import model.CuttingVerb;
+
 public class GlobalSettings {
     // true: the results are printed as a JTable
     public final static boolean VISUALIZE_RESULTS = true;
@@ -32,10 +34,7 @@ public class GlobalSettings {
     public final static boolean IMAGE_VIDEO_COUNTER = true;
     // true: only allow prepositions that are summarized in the prepositions array in the PoSTagger
     public final static boolean EXCLUDE_PREPOSITIONS = true;
-
-    public final static String searchTerm = "dice";
-    public final static String searchTermPast = "diced";
-    public final static String searchTermParticiple = "dicing";
+    public final static CuttingVerb searchVerb = CuttingVerb.DICE;
     public final static String targetFilterTerm = "";
     public final static String locationFilterTerm = "";
     public final static String sentenceFilterTerm = "";
