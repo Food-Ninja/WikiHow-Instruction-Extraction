@@ -42,7 +42,7 @@ public class PoSTagger {
         return -1;
     }
 
-    public static boolean checkIfPastTenseIsVerb(String toCheck) {
+    public static boolean checkIfPastTenseIsVerb(String toCheck, String pastForm) {
         String tagged = tagger.tagString(toCheck);
         String[] tagsPerWord = tagged.split("\\s+");
         for (String s : tagsPerWord) {
@@ -50,7 +50,7 @@ public class PoSTagger {
             String word = wordTagPair[0];
             String tag = wordTagPair[1];
 
-            if(word.equals(GlobalSettings.searchVerb.past)) {
+            if(word.equals(pastForm)) {
                 if (Arrays.stream(VERB_TAGS).anyMatch(tag::equalsIgnoreCase)) {
                     return true;
                 }

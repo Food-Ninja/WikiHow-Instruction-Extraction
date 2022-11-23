@@ -1,6 +1,7 @@
 import analysis.*;
 import io.JSONFileReader;
 import io.ResultVisualizer;
+import io.StepFilter;
 import model.DeconstructedStepSentence;
 import model.WikiHowStep;
 import nlp.CoreferenceResolver;
@@ -21,21 +22,26 @@ public class ExtractionStarter {
         PoSTagger.initialize();
         addAnalyzers();
 
-        ArrayList<WikiHowStep> steps = reader.extractStepsFromFiles();
-        System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.present + "\"\n");
-        callStepAnalyzers(steps);
+        ArrayList<WikiHowStep> unfilteredSteps = reader.extractStepsFromFiles();
+        if(args.length > 0 && args[0].equals("synonyms")) {
+            CuttingVerbAnalyzer.analyzeSynonyms(unfilteredSteps);
+        } else {
+            ArrayList<WikiHowStep> steps = StepFilter.filterGivenSteps(unfilteredSteps);
+            System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.present + "\"\n");
+            callStepAnalyzers(steps);
 
-        ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
-        if(!GlobalSettings.OVERVIEW_EXTRACTION) {
-            sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps);
-            CoreferenceResolver.resolveCoreferences(sentences);
-            callSentenceAnalyzers(sentences);
-            System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.present + "\"" +
-                    (GlobalSettings.FILTER_TARGET ? " and \"" + GlobalSettings.targetFilterTerm + "\"" : "") +
-                    (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterTerm + "\"" : "") +
-                    (GlobalSettings.FILTER_LOCATION ? " and \"" + GlobalSettings.locationFilterTerm + "\"" : ""));
+            ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
+            if(!GlobalSettings.OVERVIEW_EXTRACTION) {
+                sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps);
+                CoreferenceResolver.resolveCoreferences(sentences);
+                callSentenceAnalyzers(sentences);
+                System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.present + "\"" +
+                        (GlobalSettings.FILTER_TARGET ? " and \"" + GlobalSettings.targetFilterTerm + "\"" : "") +
+                        (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterTerm + "\"" : "") +
+                        (GlobalSettings.FILTER_LOCATION ? " and \"" + GlobalSettings.locationFilterTerm + "\"" : ""));
+            }
+            visualizer.visualizeResults(steps, sentences);
         }
-        visualizer.visualizeResults(steps, sentences);
     }
 
     private static void addAnalyzers() {

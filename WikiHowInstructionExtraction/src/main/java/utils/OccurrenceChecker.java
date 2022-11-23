@@ -1,20 +1,25 @@
 package utils;
 
+import model.CuttingVerb;
 import nlp.PoSTagger;
 
 import java.util.regex.Pattern;
 
 public class OccurrenceChecker {
     public static boolean checkOccurrence(String toCheck) {
-        if(toCheck == null || toCheck.isEmpty()) {
+        return checkOccurrence(toCheck, GlobalSettings.searchVerb);
+    }
+
+    public static boolean checkOccurrence(String toCheck, CuttingVerb verbToCompareTo) {
+        if(toCheck == null || toCheck.isEmpty() || verbToCompareTo == null) {
             return false;
         }
 
-        if(!GlobalSettings.EXCLUDE_PAST_TENSE && !GlobalSettings.searchVerb.doesPresentEqualPast() && doesWordOccurInSentence(GlobalSettings.searchVerb.past, toCheck)) {
-            return PoSTagger.checkIfPastTenseIsVerb(toCheck);
+        if(!GlobalSettings.EXCLUDE_PAST_TENSE && !verbToCompareTo.doesPresentEqualPast() && doesWordOccurInSentence(verbToCompareTo.past, toCheck)) {
+            return PoSTagger.checkIfPastTenseIsVerb(toCheck, verbToCompareTo.past);
         }
 
-        return doesWordOccurInSentence(GlobalSettings.searchVerb.present, toCheck) || doesWordOccurInSentence(GlobalSettings.searchVerb.participle, toCheck);
+        return doesWordOccurInSentence(verbToCompareTo.present, toCheck) || doesWordOccurInSentence(verbToCompareTo.participle, toCheck);
     }
 
     public static boolean doesWordOccurInSentence(String word, String sentence) {

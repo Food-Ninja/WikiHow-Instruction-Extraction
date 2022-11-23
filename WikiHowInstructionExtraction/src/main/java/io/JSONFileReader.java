@@ -9,7 +9,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import utils.GlobalSettings;
-import utils.OccurrenceChecker;
 
 import java.io.File;
 import java.io.FileReader;
@@ -84,10 +83,6 @@ public class JSONFileReader {
                 String imgFile = (String) stepObj.get("img");
                 WikiHowStep step = new WikiHowStep(s, headline, desc, imgFile, method);
                 VerbOccurrencePrinter.analyzeSearchTermOccurrenceInStep(step);
-
-                if (!GlobalSettings.ONLY_CATEGORY_FILTER && !OccurrenceChecker.checkOccurrence(desc)) {
-                    continue;
-                }
                 stepsInFile.add(step);
             }
         }
@@ -98,9 +93,7 @@ public class JSONFileReader {
     private boolean checkForFileSkip(JSONObject file) {
         JSONArray categories = (JSONArray) file.get("category_hierarchy");
         if(GlobalSettings.CATEGORY_EXCLUSION) {
-            if(categories.isEmpty() || !categories.get(0).equals(GlobalSettings.relevantCategoryParent)) {
-                return true;
-            }
+            return categories.isEmpty() || !categories.get(0).equals(GlobalSettings.relevantCategoryParent);
         }
         if(GlobalSettings.ONLY_CATEGORY_FILTER) {
             return categories.isEmpty() || !categories.contains(GlobalSettings.relevantCategoryAny);
