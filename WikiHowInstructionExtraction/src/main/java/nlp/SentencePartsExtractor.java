@@ -64,6 +64,11 @@ public class SentencePartsExtractor {
                 //!after.toString().trim().isEmpty()) {
                 continue;
             }
+            if(GlobalSettings.FILTER_SENTENCE &&
+                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.sentenceFilterTerm, sentEntry.getKey())) {
+                //!after.toString().trim().isEmpty()) {
+                continue;
+            }
             if(GlobalSettings.EXCLUDE_EMPTY_PREPOSITIONS &&
                     prep.trim().isEmpty()) {
                 continue;
