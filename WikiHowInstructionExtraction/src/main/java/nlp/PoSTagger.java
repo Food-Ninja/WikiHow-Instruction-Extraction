@@ -42,15 +42,15 @@ public class PoSTagger {
         return -1;
     }
 
-    public static boolean checkIfPastTenseIsVerb(String toCheck, String pastForm) {
-        String tagged = tagger.tagString(toCheck);
+    public static boolean checkIfWordIsUsedAsVerb(String wordToCheck, String sentence) {
+        String tagged = tagger.tagString(sentence);
         String[] tagsPerWord = tagged.split("\\s+");
         for (String s : tagsPerWord) {
             String[] wordTagPair = s.split("_");
             String word = wordTagPair[0];
             String tag = wordTagPair[1];
 
-            if(word.equals(pastForm)) {
+            if(word.equals(wordToCheck)) {
                 if (Arrays.stream(VERB_TAGS).anyMatch(tag::equalsIgnoreCase)) {
                     return true;
                 }

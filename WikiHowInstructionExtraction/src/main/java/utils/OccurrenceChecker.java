@@ -15,11 +15,20 @@ public class OccurrenceChecker {
             return false;
         }
 
-        if(!GlobalSettings.EXCLUDE_PAST_TENSE && !verbToCompareTo.doesPresentEqualPast() && doesWordOccurInSentence(verbToCompareTo.past, toCheck)) {
-            return PoSTagger.checkIfPastTenseIsVerb(toCheck, verbToCompareTo.past);
+        boolean presentOrParticiple = checkOccurrenceAndVerb(verbToCompareTo.present, toCheck) || checkOccurrenceAndVerb(verbToCompareTo.participle, toCheck);
+        if(GlobalSettings.EXCLUDE_PAST_TENSE || verbToCompareTo.doesPresentEqualPast()) {
+            return presentOrParticiple;
         }
 
-        return doesWordOccurInSentence(verbToCompareTo.present, toCheck) || doesWordOccurInSentence(verbToCompareTo.participle, toCheck);
+        return presentOrParticiple || checkOccurrenceAndVerb(verbToCompareTo.past, toCheck);
+    }
+
+    private static boolean checkOccurrenceAndVerb(String word, String sentence) {
+        if(doesWordOccurInSentence(word, sentence)) {
+            return PoSTagger.checkIfWordIsUsedAsVerb(word, sentence);
+        } else {
+            return false;
+        }
     }
 
     public static boolean doesWordOccurInSentence(String word, String sentence) {
