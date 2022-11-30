@@ -15,6 +15,7 @@ public class OccurrenceChecker {
             return false;
         }
 
+        toCheck = toCheck.toLowerCase();
         boolean presentOrParticiple = checkOccurrenceAndVerb(verbToCompareTo.present, toCheck) || checkOccurrenceAndVerb(verbToCompareTo.participle, toCheck);
         if(GlobalSettings.EXCLUDE_PAST_TENSE || verbToCompareTo.doesPresentEqualPast()) {
             return presentOrParticiple;
