@@ -33,6 +33,13 @@ public class SentencePreprocessor {
         description = description.replaceAll("\\.\\.", ".");
         description = description.replaceAll("!", ".");
         description = description.replaceAll(";", "");
+        description = description.replaceAll("\"", "");
+        description = description.replaceAll("“", "");
+        description = description.replaceAll("”", "");
+        description = description.replaceAll("\n", " ");
+        description = description.replaceAll(":", "");
+        description = description.replaceAll("—", " ");
+        description = description.replaceAll("-", " ");
         description = description.replaceAll(" {2}", " ");
 
         description = description.replaceAll("`", "'");
@@ -40,6 +47,7 @@ public class SentencePreprocessor {
         description = description.replaceAll("'ve", " have");
         description = description.replaceAll("n't", " not");
         description = description.replaceAll("'re", " are");
+        description = description.replaceAll("'", "");
         return description;
     }
 
