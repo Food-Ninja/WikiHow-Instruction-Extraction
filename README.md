@@ -13,8 +13,9 @@ This tool relies on three external dependencies:
 
 ## Installation
 1. Download the project
-2. Extract the WikiHow corpus into the ``/WikiHowInstructionExtraction/data`` folder
-3. Add references to the following three ``.jar`` files:
+2. Create a new folder in ``/WikiHowInstructionExtraction`` called ``data``
+3. Extract the WikiHow corpus into the created folder
+4. Add references to the following three ``.jar`` files:
 	- json-simple-1.1.jar
 	- stanford-corenlp-4.5.0.jar
 	- stanford-corenlp-4.5.0-models.jar
