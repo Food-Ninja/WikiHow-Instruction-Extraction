@@ -7,8 +7,8 @@ These information should support cognitive robots in understanding and parameter
 This tool relies on three external dependencies:
 
 - [**JSON Simple 1.1**](http://www.java2s.com/Code/Jar/j/Downloadjsonsimple11jar.htm) - Opening JSON files containing the WikiHow data
-- [**Stanford CoreNLP 4.5.0**](https://stanfordnlp.github.io/CoreNLP/) - Handling NLP techniques like PoS-Tagging [[1]](https://github.com/Janfiderheld/WikiHow-Robot-Instruction-Extraction/edit/main/README.md#references)
-- [**WikiHow Corpus**](https://drive.google.com/file/d/1ufBrqYoHTFoBtSxwYks6i_iR9HqmobxR/view) - WikiHow Corpus where each article is represented by 1 JSON file, crawled by [[2]](https://github.com/Janfiderheld/WikiHow-Robot-Instruction-Extraction/edit/main/README.md#references)
+- [**Stanford CoreNLP 4.5.0**](https://stanfordnlp.github.io/CoreNLP/) - Handling NLP techniques like PoS-Tagging [[1]](https://github.com/Janfiderheld/WikiHow-Robot-Instruction-Extraction#references)
+- [**WikiHow Corpus**](https://drive.google.com/file/d/1ufBrqYoHTFoBtSxwYks6i_iR9HqmobxR/view) - WikiHow Corpus where each article is represented by 1 JSON file, crawled by [[2]](https://github.com/Janfiderheld/WikiHow-Robot-Instruction-Extraction#references)
 - The tool is tested using [**Java Version 18.0.2**](https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html)
 
 ## Installation
