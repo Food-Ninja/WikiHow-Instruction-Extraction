@@ -15,7 +15,7 @@ public class PoSTagger {
     private static final String[] NOUN_TAGS = new String[]{ "NN", "NNS", "NNP", "NNPS" };
     private static MaxentTagger tagger;
 
-    private final static String[] prepositions = new String[]{"over", "under", "in", "into", "inside", "on", "onto",
+    public final static String[] prepositions = new String[]{"over", "under", "in", "into", "inside", "on", "onto",
             "down", "through", "out", "off", "up"};
 
     public static void initialize() {

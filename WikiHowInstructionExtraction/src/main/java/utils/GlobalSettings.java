@@ -3,41 +3,104 @@ package utils;
 import model.CuttingVerb;
 
 public class GlobalSettings {
-    // true: the results are printed as a JTable
-    public final static boolean VISUALIZE_RESULTS = true;
-    // true: all articles from the parent category != relevantCategoryParent are excluded from the results
-    public final static boolean CATEGORY_EXCLUSION = true;
-    // true: search only for articles where any category == relevantCategoryAny
-    public final static boolean ONLY_CATEGORY_FILTER = false;
-    // true: the occurrences of the searchTerm in the different parts of the article are counted & printed
-    public final static boolean OCCURRENCE_PRINTING = true;
-    // true: counts & prints the distribution of the searchTerm in the parent categories
-    public final static boolean CATEGORY_DISTRIBUTION = true;
-    // true: the general overview consisting of title, categories, method name, step headline and
-    // step description is visualized
+    /**
+     * Visualize the results in a JTable instead of "just" printing using the console
+     */
+    public final static boolean VISUALIZE_RESULTS = false;
+    /**
+     * When this flag is set to true, a general overview over the results is used, consisting of these five parts of an article:
+     * title, title description, method name, step headline, step description.
+     * Otherwise, the different sentences from the step description are split up and analyzed.
+     */
     public final static boolean OVERVIEW_EXTRACTION = false;
-    // true: all target objects that do not equal the targetFilterTerm are excluded from the results
-    public final static boolean FILTER_TARGET = false;
-    // true: all target locations that do not equal the locationFilterTerm are excluded from the results
-    public final static boolean FILTER_LOCATION = false;
-    // true: exclude all detailed results where the sentence does not contain the word sentenceFilterTerm
+    /**
+     * Only include articles where the PARENT category is equal to the {@link GlobalSettings#relevantCategoryParent} string
+     */
+    public final static boolean CATEGORY_EXCLUSION = true;
+    /**
+     * Only include articles where ANY category is equal to the {@link GlobalSettings#relevantCategoryAny} string
+     */
+    public final static boolean ONLY_CATEGORY_FILTER = false;
+    /**
+     * Use the {@link analysis.VerbOccurrencePrinter} to count the occurrences of the {@link GlobalSettings#searchVerb}
+     * in different parts of the article. These parts are: title, title description, method name, step headline, step description
+     */
+    public final static boolean OCCURRENCE_PRINTING = false;
+    /**
+     * Use the {@link analysis.CategoryDistributionAnalyzer} to count the occurrences of the
+     * {@link GlobalSettings#searchVerb} in different parent categories
+     */
+    public final static boolean CATEGORY_DISTRIBUTION = false;
+    /**
+     * Use the {@link analysis.ImageAndVideoCounter} to analyze the usage of the images and videos in the found articles.
+     */
+    public final static boolean IMAGE_VIDEO_COUNTER = false;
+    /**
+     * This filter is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * Only include sentences where the part BEFORE the preposition is equal to the {@link GlobalSettings#beforeFilterString}.
+     */
+    public final static boolean FILTER_BEFORE_PART = false;
+    /**
+     * This filter is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * Only include sentences where the part AFTER the preposition is equal to the {@link GlobalSettings#afterFilterString}.
+     */
+    public final static boolean FILTER_AFTER_PART = true;
+    /**
+     * This filter is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * Only include sentences that contain the {@link GlobalSettings#sentenceFilterString}.
+     */
     public final static boolean FILTER_SENTENCE = false;
-    // true: exclude all detailed results where the preposition is empty
+    /**
+     * This flag is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * Exclude all sentences where the past tense of the {@link GlobalSettings#searchVerb} occurs, since it e.g.
+     * can be mistaken for an adjective (e.g. diced).
+     */
+    public final static boolean EXCLUDE_PAST_TENSE = false;
+    /**
+     * This flag is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * Exclude all sentences with an empty preposition.
+     */
     public final static boolean EXCLUDE_EMPTY_PREPOSITIONS = false;
-    // true: count & print the usage of the different sentence parts in the detailed sentence results
-    public final static boolean SENTENCE_PARTS_ANALYSIS = true;
-    // true: count & print the distribution of the prepositions in the detailed sentence results
-    public final static boolean PREPOSITION_DISTRIBUTION = true;
-    // true: exclude the past tense of the search term for whatever reason (e.g. can be mistaken for adjective)
-    public final static boolean EXCLUDE_PAST_TENSE = true;
-    // true: count occurrences of images and videos in steps
-    public final static boolean IMAGE_VIDEO_COUNTER = true;
+    /**
+     * This flag is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * Use the {@link analysis.SentencePartAnalysis} to count the occurrences of the {@link GlobalSettings#searchVerb} in different parts of the sentence.
+     */
+    public final static boolean SENTENCE_PARTS_ANALYSIS = false;
+    /**
+     * This flag is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * Use the {@link analysis.PrepositionDistributionAnalyzer} to count the occurrences of the different prepositions.
+     */
+    public final static boolean PREPOSITION_DISTRIBUTION = false;
     // true: only allow prepositions that are summarized in the prepositions array in the PoSTagger
+    /**
+     * This filter is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
+     * When this flag is set to true, only prepositions collected in the {@link nlp.PoSTagger#prepositions} array are
+     * counted as valid. Otherwise, everything tagged as a preposition by the {@link nlp.PoSTagger} is a valid preposition.
+     */
     public final static boolean EXCLUDE_PREPOSITIONS = true;
-    public final static CuttingVerb searchVerb = CuttingVerb.DICE;
-    public final static String targetFilterTerm = "";
-    public final static String locationFilterTerm = "";
-    public final static String sentenceFilterTerm = "";
+
+    /**
+     * The {@link CuttingVerb} that is currently searched for and analyzed
+     */
+    public final static CuttingVerb searchVerb = CuttingVerb.CUT;
+    /**
+     * The parent category used for exclusion through the {@link GlobalSettings#CATEGORY_EXCLUSION} flag
+     */
     public final static String relevantCategoryParent = "Food and Entertaining";
+    /**
+     * The category used for inclusion through the {@link GlobalSettings#ONLY_CATEGORY_FILTER} flag
+     */
     public final static String relevantCategoryAny = "Food Cutting Techniques";
+    /**
+     * The string used for filtering the sentence part BEFORE the preposition through the {@link GlobalSettings#FILTER_BEFORE_PART} flag
+     */
+    public final static String beforeFilterString = "";
+    /**
+     * The string used for filtering the sentence part AFTER the preposition through the {@link GlobalSettings#FILTER_AFTER_PART} flag
+     */
+    public final static String afterFilterString = "cubes";
+    /**
+     * The string used for filtering the sentence through the {@link GlobalSettings#FILTER_SENTENCE} flag
+     */
+    public final static String sentenceFilterString = "meat";
 }

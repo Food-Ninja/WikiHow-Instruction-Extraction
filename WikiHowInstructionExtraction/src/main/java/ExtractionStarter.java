@@ -36,9 +36,9 @@ public class ExtractionStarter {
                 CoreferenceResolver.resolveCoreferences(sentences);
                 callSentenceAnalyzers(sentences);
                 System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.present + "\"" +
-                        (GlobalSettings.FILTER_TARGET ? " and \"" + GlobalSettings.targetFilterTerm + "\"" : "") +
-                        (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterTerm + "\"" : "") +
-                        (GlobalSettings.FILTER_LOCATION ? " and \"" + GlobalSettings.locationFilterTerm + "\"" : ""));
+                        (GlobalSettings.FILTER_BEFORE_PART ? " and \"" + GlobalSettings.beforeFilterString + "\"" : "") +
+                        (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterString + "\"" : "") +
+                        (GlobalSettings.FILTER_AFTER_PART ? " and \"" + GlobalSettings.afterFilterString + "\"" : ""));
             }
             visualizer.visualizeResults(steps, sentences);
         }

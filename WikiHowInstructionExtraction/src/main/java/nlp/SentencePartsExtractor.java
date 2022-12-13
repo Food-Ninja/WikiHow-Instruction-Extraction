@@ -54,18 +54,18 @@ public class SentencePartsExtractor {
                 }
             }
 
-            if(GlobalSettings.FILTER_TARGET &&
-                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.targetFilterTerm, before.toString())) {
+            if(GlobalSettings.FILTER_BEFORE_PART &&
+                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.beforeFilterString, before.toString())) {
                 //before.toString().trim().isEmpty()) {
                 continue;
             }
-            if(GlobalSettings.FILTER_LOCATION &&
-                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.locationFilterTerm, after.toString())) {
+            if(GlobalSettings.FILTER_AFTER_PART &&
+                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.afterFilterString, after.toString())) {
                 //!after.toString().trim().isEmpty()) {
                 continue;
             }
             if(GlobalSettings.FILTER_SENTENCE &&
-                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.sentenceFilterTerm, sentEntry.getKey())) {
+                    !OccurrenceChecker.doesWordOccurInSentence(GlobalSettings.sentenceFilterString, sentEntry.getKey())) {
                 //!after.toString().trim().isEmpty()) {
                 continue;
             }
