@@ -1,7 +1,7 @@
 package io;
 
-import model.CuttingVerb;
 import model.WikiHowStep;
+import model.verbs.ISearchableVerb;
 import utils.GlobalSettings;
 import utils.OccurrenceChecker;
 
@@ -14,7 +14,7 @@ public class StepFilter {
         return filterGivenSteps(steps, GlobalSettings.searchVerb);
     }
 
-    public static ArrayList<WikiHowStep> filterGivenSteps(ArrayList<WikiHowStep> steps, CuttingVerb verb) {
+    public static ArrayList<WikiHowStep> filterGivenSteps(ArrayList<WikiHowStep> steps, ISearchableVerb verb) {
         List<WikiHowStep> list = steps.stream().filter(s -> OccurrenceChecker.checkOccurrence(s.getDescription(), verb)).toList();
         return new ArrayList<>(list);
     }

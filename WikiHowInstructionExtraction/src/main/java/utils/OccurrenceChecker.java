@@ -1,6 +1,6 @@
 package utils;
 
-import model.CuttingVerb;
+import model.verbs.ISearchableVerb;
 import nlp.PoSTagger;
 
 import java.util.regex.Pattern;
@@ -10,18 +10,18 @@ public class OccurrenceChecker {
         return checkOccurrence(toCheck, GlobalSettings.searchVerb);
     }
 
-    public static boolean checkOccurrence(String toCheck, CuttingVerb verbToCompareTo) {
+    public static boolean checkOccurrence(String toCheck, ISearchableVerb verbToCompareTo) {
         if(toCheck == null || toCheck.isEmpty() || verbToCompareTo == null) {
             return false;
         }
 
         toCheck = toCheck.toLowerCase();
-        boolean presentOrParticiple = checkOccurrenceAndVerb(verbToCompareTo.present, toCheck) || checkOccurrenceAndVerb(verbToCompareTo.participle, toCheck);
+        boolean presentOrParticiple = checkOccurrenceAndVerb(verbToCompareTo.getPresentForm(), toCheck) || checkOccurrenceAndVerb(verbToCompareTo.getParticipleForm(), toCheck);
         if(GlobalSettings.EXCLUDE_PAST_TENSE || verbToCompareTo.doesPresentEqualPast()) {
             return presentOrParticiple;
         }
 
-        return presentOrParticiple || checkOccurrenceAndVerb(verbToCompareTo.past, toCheck);
+        return presentOrParticiple || checkOccurrenceAndVerb(verbToCompareTo.getPastForm(), toCheck);
     }
 
     private static boolean checkOccurrenceAndVerb(String word, String sentence) {
@@ -39,11 +39,11 @@ public class OccurrenceChecker {
     }
 
     public static int getVerbLocationInSentenceChars(String sent) {
-        int verbLocation = sent.indexOf(GlobalSettings.searchVerb.present);
+        int verbLocation = sent.indexOf(GlobalSettings.searchVerb.getPresentForm());
         if(verbLocation == -1) {
-            verbLocation = sent.indexOf(GlobalSettings.searchVerb.past);
+            verbLocation = sent.indexOf(GlobalSettings.searchVerb.getPastForm());
             if(verbLocation == -1) {
-                verbLocation = sent.indexOf(GlobalSettings.searchVerb.participle);
+                verbLocation = sent.indexOf(GlobalSettings.searchVerb.getParticipleForm());
                 if(verbLocation == -1) {
                     verbLocation = 0;
                 }

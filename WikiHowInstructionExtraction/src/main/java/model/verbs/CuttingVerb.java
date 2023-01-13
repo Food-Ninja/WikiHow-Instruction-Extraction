@@ -1,6 +1,6 @@
-package model;
+package model.verbs;
 
-public enum CuttingVerb {
+public enum CuttingVerb implements ISearchableVerb {
     // "Cut" and its different synonyms taken from Thesaurus, VerbNet and WordNet.
     // We only include verbs relevant for the cooking domain.
     // The past and participle forms are taken from https://pasttenses.com
@@ -26,11 +26,11 @@ public enum CuttingVerb {
     TRENCH("trench", "trenched", "trenching"),
     TRISECT("trisect", "trisected", "trisecting");
 
-    public final String present;
+    private final String present;
 
-    public final String past;
+    private final String past;
 
-    public final String participle;
+    private final String participle;
 
     CuttingVerb(String verb, String past, String participle) {
         this.present = verb;
@@ -38,7 +38,23 @@ public enum CuttingVerb {
         this.participle = participle;
     }
 
+    @Override
     public boolean doesPresentEqualPast() {
         return present.equals(past);
+    }
+
+    @Override
+    public String getPresentForm() {
+        return present;
+    }
+
+    @Override
+    public String getPastForm() {
+        return past;
+    }
+
+    @Override
+    public String getParticipleForm() {
+        return participle;
     }
 }

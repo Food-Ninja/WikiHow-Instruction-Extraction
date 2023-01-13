@@ -1,6 +1,6 @@
 package analysis;
 
-import model.CuttingVerb;
+import model.verbs.CuttingVerb;
 import model.WikiHowStep;
 import utils.OccurrenceChecker;
 
@@ -33,7 +33,7 @@ public class CuttingVerbAnalyzer {
                 }
             }
 
-            System.out.printf("%s; %d; %d; %d; %d; %d%n", verb.present, titleCount, tiDescCount, methCount, headCount, descCount);
+            System.out.printf("%s; %d; %d; %d; %d; %d%n", verb.getPresentForm(), titleCount, tiDescCount, methCount, headCount, descCount);
         }
     }
 }

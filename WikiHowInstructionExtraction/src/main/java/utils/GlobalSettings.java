@@ -1,6 +1,8 @@
 package utils;
 
-import model.CuttingVerb;
+import model.verbs.CuttingVerb;
+import model.verbs.ISearchableVerb;
+import model.verbs.PouringVerb;
 
 public class GlobalSettings {
     /**
@@ -71,7 +73,6 @@ public class GlobalSettings {
      * Use the {@link analysis.PrepositionDistributionAnalyzer} to count the occurrences of the different prepositions.
      */
     public final static boolean PREPOSITION_DISTRIBUTION = false;
-    // true: only allow prepositions that are summarized in the prepositions array in the PoSTagger
     /**
      * This filter is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
      * When this flag is set to true, only prepositions collected in the {@link nlp.PoSTagger#prepositions} array are
@@ -82,7 +83,7 @@ public class GlobalSettings {
     /**
      * The {@link CuttingVerb} that is currently searched for and analyzed
      */
-    public final static CuttingVerb searchVerb = CuttingVerb.CUT;
+    public final static ISearchableVerb searchVerb = PouringVerb.POUR;
     /**
      * The parent category used for exclusion through the {@link GlobalSettings#CATEGORY_EXCLUSION} flag
      */

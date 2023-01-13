@@ -27,7 +27,7 @@ public class ExtractionStarter {
             CuttingVerbAnalyzer.analyzeSynonyms(unfilteredSteps);
         } else {
             ArrayList<WikiHowStep> steps = StepFilter.filterGivenSteps(unfilteredSteps);
-            System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.present + "\"\n");
+            System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"\n");
             callStepAnalyzers(steps);
 
             ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
@@ -35,7 +35,7 @@ public class ExtractionStarter {
                 sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps);
                 CoreferenceResolver.resolveCoreferences(sentences);
                 callSentenceAnalyzers(sentences);
-                System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.present + "\"" +
+                System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"" +
                         (GlobalSettings.FILTER_BEFORE_PART ? " and \"" + GlobalSettings.beforeFilterString + "\"" : "") +
                         (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterString + "\"" : "") +
                         (GlobalSettings.FILTER_AFTER_PART ? " and \"" + GlobalSettings.afterFilterString + "\"" : ""));
