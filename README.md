@@ -25,7 +25,7 @@ To start the analysis, execute the main-Method in the ``ExtractionStarter`` clas
 In general, the ``GlobalSettings`` class in the *utils* package contains parameters that can be changed to alter the program execution.
 Each parameter is thoroughly explained through its comment.
 If no startup argument is provided, a single verb will be analyzed according to the current settings.
-If the argument 'synonyms' is given, the occurrences of 20 different synonyms for the verb *"Cut"* are analyzed and printed. 
+If the argument 'hyponyms' is given, the occurrences of 20 different hyponyms for the verb *"Cut"* are analyzed and printed. 
 
 ## References
 [1] C. D. Manning, M. Surdeanu, J. Bauer, J. Finkel, S. J. Bethard, and D. McClosky, ‘The Stanford CoreNLP Natural Language Processing Toolkit’, in Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics: System Demonstrations, 2014, pp. 55–60. [Online]. Available: http://www.aclweb.org/anthology/P/P14/P14-5010
