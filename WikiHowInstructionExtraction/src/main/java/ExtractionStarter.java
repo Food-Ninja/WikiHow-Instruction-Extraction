@@ -24,8 +24,8 @@ public class ExtractionStarter {
         addAnalyzers();
 
         ArrayList<WikiHowStep> unfilteredSteps = reader.extractStepsFromFiles();
-        if(args.length > 0 && args[0].equals("synonyms")) {
-            CuttingVerbAnalyzer.analyzeSynonyms(unfilteredSteps);
+        if(args.length > 0 && args[0].equals("hyponyms")) {
+            CuttingVerbAnalyzer.analyzeHyponyms(unfilteredSteps);
 
             if(!GlobalSettings.OVERVIEW_EXTRACTION) {
                 ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();

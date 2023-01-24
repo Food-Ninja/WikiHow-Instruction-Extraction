@@ -1,7 +1,7 @@
 package model.verbs;
 
 public enum CuttingVerb implements ISearchableVerb {
-    // "Cut" and its different synonyms taken from Thesaurus, VerbNet and WordNet.
+    // "Cut" and its different hyponyms taken from Thesaurus, VerbNet and WordNet.
     // We only include verbs relevant for the cooking domain.
     // The past and participle forms are taken from https://pasttenses.com
     CUT("cut", "cut", "cutting"),

@@ -7,8 +7,8 @@ import utils.OccurrenceChecker;
 import java.util.ArrayList;
 
 public class CuttingVerbAnalyzer {
-    public static void analyzeSynonyms(ArrayList<WikiHowStep> steps) {
-        System.out.println("Starting the Cutting Synonym Analysis...");
+    public static void analyzeHyponyms(ArrayList<WikiHowStep> steps) {
+        System.out.println("Starting the Cutting Hyponym Analysis...");
         for (CuttingVerb verb : CuttingVerb.values()) {
             int descCount = 0;
             int methCount = 0;
