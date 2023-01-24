@@ -1,5 +1,6 @@
 package nlp;
 
+import model.verbs.ISearchableVerb;
 import utils.OccurrenceChecker;
 
 import java.text.Normalizer;
@@ -11,12 +12,12 @@ public class SentencePreprocessor {
 
     private final static String[] sentenceCombiners = new String[]{"and", "where", "if", "before", "while"};
 
-    public static Map<String, String> preprocessDescription(String description) {
+    public static Map<String, String> preprocessDescription(String description, ISearchableVerb verb) {
         String desc = preprocessWholeDescription(description);
-        ArrayList<String> sentences = splitUpStepDescription(desc);
+        ArrayList<String> sentences = splitUpStepDescription(desc, verb);
         Map<String, String> processedSentences = new HashMap<>();
         for(String sent : sentences) {
-            processedSentences.put(sent, preprocessSentence(sent));
+            processedSentences.put(sent, preprocessSentence(sent, verb));
         }
         return processedSentences;
     }
@@ -78,10 +79,11 @@ public class SentencePreprocessor {
     /**
      * Takes the step description string and returns a list containing all sentences from the
      * description where the searched verb occurs as single strings inside the list.
-     * @param desc
-     * @return
+     * @param desc step description to split up
+     * @param verb verb to search for
+     * @return list containing the split up description
      */
-    private static ArrayList<String> splitUpStepDescription(String desc) {
+    private static ArrayList<String> splitUpStepDescription(String desc, ISearchableVerb verb) {
         // split the description at each period (.)
         String[] sentences = desc.split("\\.");
         ArrayList<String> gluedSent = new ArrayList<>();
@@ -106,20 +108,20 @@ public class SentencePreprocessor {
         }
 
         // return all sentences that contain the action verb
-        gluedSent.removeAll(gluedSent.stream().filter(s -> !OccurrenceChecker.checkOccurrence(s)).toList());
+        gluedSent.removeAll(gluedSent.stream().filter(s -> !OccurrenceChecker.checkOccurrence(s, verb)).toList());
         return gluedSent;
     }
 
-    private static String preprocessSentence(String sent) {
-        sent = cutGivenSentenceAtComma(sent);
+    private static String preprocessSentence(String sent, ISearchableVerb verb) {
+        sent = cutGivenSentenceAtComma(sent, verb);
         for(var word : sentenceCombiners) {
-            sent = cutGivenSentenceAtWord(sent, word);
+            sent = cutGivenSentenceAtWord(sent, word, verb);
         }
         return removeSpecialCharacters(sent);
     }
 
-    private static String cutGivenSentenceAtComma(String sent) {
-        int verbBeginLocation = OccurrenceChecker.getVerbLocationInSentenceChars(sent);
+    private static String cutGivenSentenceAtComma(String sent, ISearchableVerb verb) {
+        int verbBeginLocation = OccurrenceChecker.getVerbLocationInSentenceChars(sent, verb);
         if(sent.contains(",") && sent.lastIndexOf(",") > verbBeginLocation) {
             for(int i = verbBeginLocation; i < sent.length(); i++) {
                 if(sent.charAt(i) == ',') {
@@ -133,12 +135,12 @@ public class SentencePreprocessor {
         return sent;
     }
 
-    private static String cutGivenSentenceAtWord(String toCut, String word) {
+    private static String cutGivenSentenceAtWord(String toCut, String word, ISearchableVerb verb) {
         if(!OccurrenceChecker.doesWordOccurInSentence(word, toCut)) {
             return toCut;
         }
 
-        int verbBeginLocation = OccurrenceChecker.getVerbLocationInSentenceChars(toCut);
+        int verbBeginLocation = OccurrenceChecker.getVerbLocationInSentenceChars(toCut, verb);
         int wordBeginLocation = toCut.indexOf(word);
         return toCut.substring(verbBeginLocation, wordBeginLocation);
     }

@@ -4,6 +4,7 @@ import io.ResultVisualizer;
 import io.StepFilter;
 import model.DeconstructedStepSentence;
 import model.WikiHowStep;
+import model.verbs.CuttingVerb;
 import nlp.CoreferenceResolver;
 import nlp.PoSTagger;
 import nlp.SentencePartsExtractor;
@@ -25,6 +26,15 @@ public class ExtractionStarter {
         ArrayList<WikiHowStep> unfilteredSteps = reader.extractStepsFromFiles();
         if(args.length > 0 && args[0].equals("synonyms")) {
             CuttingVerbAnalyzer.analyzeSynonyms(unfilteredSteps);
+
+            if(!GlobalSettings.OVERVIEW_EXTRACTION) {
+                ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
+                for (CuttingVerb verb : CuttingVerb.values()) {
+                    ArrayList<WikiHowStep> steps = StepFilter.filterGivenSteps(unfilteredSteps, verb);
+                    sentences.addAll(SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps, verb));
+                }
+                visualizer.visualizeResults(null, sentences);
+            }
         } else {
             ArrayList<WikiHowStep> steps = StepFilter.filterGivenSteps(unfilteredSteps);
             System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"\n");
@@ -32,7 +42,7 @@ public class ExtractionStarter {
 
             ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
             if(!GlobalSettings.OVERVIEW_EXTRACTION) {
-                sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps);
+                sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps, GlobalSettings.searchVerb);
                 CoreferenceResolver.resolveCoreferences(sentences);
                 callSentenceAnalyzers(sentences);
                 System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"" +

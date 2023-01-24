@@ -38,12 +38,12 @@ public class OccurrenceChecker {
         return regexPattern.matcher(sentence.toLowerCase()).find();
     }
 
-    public static int getVerbLocationInSentenceChars(String sent) {
-        int verbLocation = sent.indexOf(GlobalSettings.searchVerb.getPresentForm());
+    public static int getVerbLocationInSentenceChars(String sent, ISearchableVerb verb) {
+        int verbLocation = sent.indexOf(verb.getPresentForm());
         if(verbLocation == -1) {
-            verbLocation = sent.indexOf(GlobalSettings.searchVerb.getPastForm());
+            verbLocation = sent.indexOf(verb.getPastForm());
             if(verbLocation == -1) {
-                verbLocation = sent.indexOf(GlobalSettings.searchVerb.getParticipleForm());
+                verbLocation = sent.indexOf(verb.getParticipleForm());
                 if(verbLocation == -1) {
                     verbLocation = 0;
                 }

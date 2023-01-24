@@ -2,6 +2,7 @@ package nlp;
 
 import model.DeconstructedStepSentence;
 import model.WikiHowStep;
+import model.verbs.ISearchableVerb;
 import utils.GlobalSettings;
 import utils.OccurrenceChecker;
 
@@ -13,10 +14,10 @@ public class SentencePartsExtractor {
 
     public final static String[] targetObjectBeginners = new String[]{"the", "a", "your", "them", "it", "enough"};
 
-    public static ArrayList<DeconstructedStepSentence> deconstructStepsIntoSentenceParts(ArrayList<WikiHowStep> steps) {
+    public static ArrayList<DeconstructedStepSentence> deconstructStepsIntoSentenceParts(ArrayList<WikiHowStep> steps, ISearchableVerb verb) {
         ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
         for(WikiHowStep step : steps) {
-            sentences.addAll(splitSentencesInParts(SentencePreprocessor.preprocessDescription(step.getDescription()), step));
+            sentences.addAll(splitSentencesInParts(SentencePreprocessor.preprocessDescription(step.getDescription(), verb), step));
         }
         return sentences;
     }
