@@ -20,7 +20,12 @@ This tool relies on three external dependencies:
 	- stanford-corenlp-4.5.0.jar
 	- stanford-corenlp-4.5.0-models.jar
 
-## Usage
+## Using the Project
+In general, the WikiHow articles analysed in this repository are structured in the following way. 
+If not specified otherwise, this projects analyses the step descriptions since they contain the most details and have the most occurrences.
+
+<img src="WikiHow Article Structure.png" width="600" alt="Summarising the structure of a WikiHow article"/><br>
+
 To start the analysis, execute the main-Method in the ``ExtractionStarter`` class.
 In general, the ``GlobalSettings`` class in the *utils* package contains parameters that can be changed to alter the program execution.
 Each parameter is thoroughly explained through its comment.
