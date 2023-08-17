@@ -3,7 +3,7 @@ package model.verbs;
 public enum CuttingVerb implements ISearchableVerb {
     // "Cut" and its different hyponyms taken from Thesaurus, VerbNet and WordNet.
     // We only include verbs relevant for the cooking domain.
-    // The past and participle forms are taken from https://pasttenses.com
+    // The past and participle forms are taken from https://en.pons.com/verb-tables/english
     CUT("cut", "cut", "cutting"),
     CARVE("carve", "carved", "carving"),
     SLASH("slash", "slashed", "slashing"),
@@ -24,7 +24,11 @@ public enum CuttingVerb implements ISearchableVerb {
     JAG("jag", "jag", "jagging"),
     JULIENNE("julienne", "julienned", "julienning"),
     TRENCH("trench", "trenched", "trenching"),
-    TRISECT("trisect", "trisected", "trisecting");
+    TRISECT("trisect", "trisected", "trisecting"),
+    // Added based on FrameNet:
+    CHOP("chop", "chopped", "chopping"),
+    FILLET("fillet", "filleted", "filleting"),
+    PARE("pare", "pared", "paring");
 
     private final String present;
 
