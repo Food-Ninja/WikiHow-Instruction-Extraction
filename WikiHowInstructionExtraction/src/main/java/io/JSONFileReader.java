@@ -1,10 +1,10 @@
 package io;
 
+import analysis.CorpusDataPrinter;
 import analysis.ImageAndVideoCounter;
 import analysis.VerbOccurrencePrinter;
-import model.WikiHowArticle;
-import model.WikiHowMethod;
-import model.WikiHowStep;
+import model.*;
+import nlp.SentencePreprocessor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -65,24 +65,46 @@ public class JSONFileReader {
         String video = (String) file.get("video");
         WikiHowArticle article = new WikiHowArticle(articleTitle, articleDescription, video);
         article.addCategories(categories);
-        ImageAndVideoCounter.countIfArticleHasVideo(article);
-        VerbOccurrencePrinter.analyzeSearchTermOccurrenceInArticle(article);
+        boolean relevantCategory = !categories.isEmpty() && categories.get(0).equals(GlobalSettings.relevantCategoryParent);
+        if(GlobalSettings.IMAGE_VIDEO_COUNTER) {
+            ImageAndVideoCounter.countIfArticleHasVideo(article);
+        }
+        if(GlobalSettings.OCCURRENCE_PRINTING) {
+            VerbOccurrencePrinter.analyzeSearchTermOccurrenceInArticle(article);
+        }
+        if(GlobalSettings.GET_CORPUS_META) {
+            CorpusDataPrinter.countArticle(relevantCategory);
+        }
 
         JSONArray methods = (JSONArray) file.get("methods");
+        if(GlobalSettings.GET_CORPUS_META) {
+            CorpusDataPrinter.countMethods(methods.size(), relevantCategory);
+        }
         for(int m = 0; m < methods.size(); m++) {
             JSONObject methodObj = (JSONObject) methods.get(m);
             String methodName = (String) methodObj.get("name");
             WikiHowMethod method = new WikiHowMethod(m, methodName, article);
-            VerbOccurrencePrinter.analyzeSearchTermOccurrenceInMethod(method);
+            if(GlobalSettings.OCCURRENCE_PRINTING) {
+                VerbOccurrencePrinter.analyzeSearchTermOccurrenceInMethod(method);
+            }
 
             JSONArray steps = (JSONArray) methodObj.get("steps");
+            if(GlobalSettings.GET_CORPUS_META) {
+                CorpusDataPrinter.countSteps(steps.size(), relevantCategory);
+            }
             for(int s = 0; s < steps.size(); s++) {
                 JSONObject stepObj = (JSONObject) steps.get(s);
                 String headline = (String) stepObj.get("headline");
                 String desc = (String) stepObj.get("description");
                 String imgFile = (String) stepObj.get("img");
                 WikiHowStep step = new WikiHowStep(s, headline, desc, imgFile, method);
-                VerbOccurrencePrinter.analyzeSearchTermOccurrenceInStep(step);
+                if(GlobalSettings.OCCURRENCE_PRINTING) {
+                    VerbOccurrencePrinter.analyzeSearchTermOccurrenceInStep(step);
+                }
+                if(GlobalSettings.GET_CORPUS_META) {
+                    String cleaned_desc = SentencePreprocessor.preprocessWholeDescription(desc);
+                    CorpusDataPrinter.countStepSentences(SentencePreprocessor.splitDescriptionIntoSentences(cleaned_desc).size(), relevantCategory);
+                }
                 stepsInFile.add(step);
             }
         }

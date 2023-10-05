@@ -1,8 +1,6 @@
 package utils;
 
-import model.verbs.CuttingVerb;
-import model.verbs.ISearchableVerb;
-import model.verbs.PouringVerb;
+import model.verbs.*;
 
 public class GlobalSettings {
     /**
@@ -15,6 +13,12 @@ public class GlobalSettings {
      * Otherwise, the different sentences from the step description are split up and analyzed.
      */
     public final static boolean OVERVIEW_EXTRACTION = false;
+    /**
+     * When this flag is set to true, the whole corpus without any filtering is analysed.
+     * This mainly focuses on the analysis done in the {@link analysis.VerbOccurrencePrinter}, so the amount of
+     * articles (= title), methods, steps and sentences in step descriptions.
+     */
+    public final static boolean GET_CORPUS_META = false;
     /**
      * Only include articles where the PARENT category is equal to the {@link GlobalSettings#relevantCategoryParent} string
      */
@@ -99,9 +103,9 @@ public class GlobalSettings {
     /**
      * The string used for filtering the sentence part AFTER the preposition through the {@link GlobalSettings#FILTER_AFTER_PART} flag
      */
-    public final static String afterFilterString = "cubes";
+    public final static String afterFilterString = "";
     /**
      * The string used for filtering the sentence through the {@link GlobalSettings#FILTER_SENTENCE} flag
      */
-    public final static String sentenceFilterString = "meat";
+    public final static String sentenceFilterString = "";
 }

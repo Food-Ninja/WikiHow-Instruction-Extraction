@@ -35,23 +35,29 @@ public class ExtractionStarter {
                 }
                 visualizer.visualizeResults(null, sentences);
             }
-        } else {
-            ArrayList<WikiHowStep> steps = StepFilter.filterGivenSteps(unfilteredSteps);
-            System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"\n");
-            callStepAnalyzers(steps);
-
-            ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
-            if(!GlobalSettings.OVERVIEW_EXTRACTION) {
-                sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps, GlobalSettings.searchVerb);
-                CoreferenceResolver.resolveCoreferences(sentences);
-                callSentenceAnalyzers(sentences);
-                System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"" +
-                        (GlobalSettings.FILTER_BEFORE_PART ? " and \"" + GlobalSettings.beforeFilterString + "\"" : "") +
-                        (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterString + "\"" : "") +
-                        (GlobalSettings.FILTER_AFTER_PART ? " and \"" + GlobalSettings.afterFilterString + "\"" : ""));
-            }
-            visualizer.visualizeResults(steps, sentences);
+            return;
         }
+
+        if(GlobalSettings.GET_CORPUS_META) {
+            CorpusDataPrinter.printResults();
+            return;
+        }
+
+        ArrayList<WikiHowStep> steps = StepFilter.filterGivenSteps(unfilteredSteps);
+        System.out.println(steps.size() + " steps containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"\n");
+        callStepAnalyzers(steps);
+
+        ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
+        if(!GlobalSettings.OVERVIEW_EXTRACTION) {
+            sentences = SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps, GlobalSettings.searchVerb);
+            CoreferenceResolver.resolveCoreferences(sentences);
+            callSentenceAnalyzers(sentences);
+            System.out.println(sentences.size() + " sentences containing \"" + GlobalSettings.searchVerb.getPresentForm() + "\"" +
+                    (GlobalSettings.FILTER_BEFORE_PART ? " and \"" + GlobalSettings.beforeFilterString + "\"" : "") +
+                    (GlobalSettings.FILTER_SENTENCE ? " and \"" + GlobalSettings.sentenceFilterString + "\"" : "") +
+                    (GlobalSettings.FILTER_AFTER_PART ? " and \"" + GlobalSettings.afterFilterString + "\"" : ""));
+        }
+        visualizer.visualizeResults(steps, sentences);
     }
 
     private static void addAnalyzers() {

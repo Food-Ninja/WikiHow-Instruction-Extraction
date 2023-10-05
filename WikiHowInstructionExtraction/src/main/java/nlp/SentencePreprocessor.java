@@ -14,7 +14,7 @@ public class SentencePreprocessor {
 
     public static Map<String, String> preprocessDescription(String description, ISearchableVerb verb) {
         String desc = preprocessWholeDescription(description);
-        ArrayList<String> sentences = splitUpStepDescription(desc, verb);
+        ArrayList<String> sentences = splitAndFilterSentences(desc, verb);
         Map<String, String> processedSentences = new HashMap<>();
         for(String sent : sentences) {
             processedSentences.put(sent, preprocessSentence(sent, verb));
@@ -22,7 +22,7 @@ public class SentencePreprocessor {
         return processedSentences;
     }
 
-    private static String preprocessWholeDescription(String description) {
+    public static String preprocessWholeDescription(String description) {
         description = convertFractionsToDecimal(description);
         description = removeSpecialCharacters(description);
         return description.toLowerCase();
@@ -31,7 +31,7 @@ public class SentencePreprocessor {
     private static String removeSpecialCharacters(String description) {
         description = description.replaceAll("(\\d)-(\\d)", "$1 to $2");
         description = description.replaceAll("[(].*?[)]", "");
-        description = description.replaceAll("\\.\\.", ".");
+        description = description.replaceAll("\\?", ".");
         description = description.replaceAll("!", ".");
         description = description.replaceAll(";", "");
         description = description.replaceAll("\"", "");
@@ -42,6 +42,7 @@ public class SentencePreprocessor {
         description = description.replaceAll("—", " ");
         description = description.replaceAll("-", " ");
         description = description.replaceAll(" {2}", " ");
+        description = description.replaceAll("\\.{2,}", ".");
 
         description = description.replaceAll("`", "'");
         description = description.replaceAll("’", "'");
@@ -77,13 +78,11 @@ public class SentencePreprocessor {
     }
 
     /**
-     * Takes the step description string and returns a list containing all sentences from the
-     * description where the searched verb occurs as single strings inside the list.
+     * Takes the step description string and returns a list containing all sentences from the description.
      * @param desc step description to split up
-     * @param verb verb to search for
      * @return list containing the split up description
      */
-    private static ArrayList<String> splitUpStepDescription(String desc, ISearchableVerb verb) {
+    public static ArrayList<String> splitDescriptionIntoSentences(String desc) {
         // split the description at each period (.)
         String[] sentences = desc.split("\\.");
         ArrayList<String> gluedSent = new ArrayList<>();
@@ -104,10 +103,13 @@ public class SentencePreprocessor {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.printf("Error %s while processing description %s\n", ex, desc);
         }
+        return gluedSent;
+    }
 
-        // return all sentences that contain the action verb
+    private static ArrayList<String> splitAndFilterSentences(String desc, ISearchableVerb verb) {
+        ArrayList<String> gluedSent = splitDescriptionIntoSentences(desc);
         gluedSent.removeAll(gluedSent.stream().filter(s -> !OccurrenceChecker.checkOccurrence(s, verb)).toList());
         return gluedSent;
     }
