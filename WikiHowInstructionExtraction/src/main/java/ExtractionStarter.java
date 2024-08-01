@@ -43,6 +43,11 @@ public class ExtractionStarter {
             return;
         }
 
+        if(args.length > 0 && args[0].equals("pickplace")) {
+            PickNPlaceAnalyzer.analyzeHyponyms(unfilteredSteps);
+            return;
+        }
+
         if(GlobalSettings.GET_CORPUS_META) {
             CorpusDataPrinter.printResults();
             return;

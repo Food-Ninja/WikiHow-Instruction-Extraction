@@ -12,13 +12,13 @@ public class GlobalSettings {
      * title, title description, method name, step headline, step description.
      * Otherwise, the different sentences from the step description are split up and analyzed.
      */
-    public final static boolean OVERVIEW_EXTRACTION = false;
+    public final static boolean OVERVIEW_EXTRACTION = true;
     /**
      * When this flag is set to true, the whole corpus without any filtering is analysed.
      * This mainly focuses on the analysis done in the {@link analysis.VerbOccurrencePrinter}, so the amount of
      * articles (= title), methods, steps and sentences in step descriptions.
      */
-    public final static boolean GET_CORPUS_META = false;
+    public final static boolean GET_CORPUS_META = true;
     /**
      * Only include articles where the PARENT category is equal to the {@link GlobalSettings#relevantCategoryParent} string
      */
@@ -31,7 +31,7 @@ public class GlobalSettings {
      * Use the {@link analysis.VerbOccurrencePrinter} to count the occurrences of the {@link GlobalSettings#searchVerb}
      * in different parts of the article. These parts are: title, title description, method name, step headline, step description
      */
-    public final static boolean OCCURRENCE_PRINTING = false;
+    public final static boolean OCCURRENCE_PRINTING = true;
     /**
      * Use the {@link analysis.CategoryDistributionAnalyzer} to count the occurrences of the
      * {@link GlobalSettings#searchVerb} in different parent categories
@@ -50,7 +50,7 @@ public class GlobalSettings {
      * This filter is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
      * Only include sentences where the part AFTER the preposition is equal to the {@link GlobalSettings#afterFilterString}.
      */
-    public final static boolean FILTER_AFTER_PART = true;
+    public final static boolean FILTER_AFTER_PART = false;
     /**
      * This filter is only applied when sentences are analyzed ({@link GlobalSettings#OVERVIEW_EXTRACTION} == False).
      * Only include sentences that contain the {@link GlobalSettings#sentenceFilterString}.
@@ -82,12 +82,12 @@ public class GlobalSettings {
      * When this flag is set to true, only prepositions collected in the {@link nlp.PoSTagger#prepositions} array are
      * counted as valid. Otherwise, everything tagged as a preposition by the {@link nlp.PoSTagger} is a valid preposition.
      */
-    public final static boolean EXCLUDE_PREPOSITIONS = true;
+    public final static boolean EXCLUDE_PREPOSITIONS = false;
 
     /**
      * The {@link CuttingVerb} that is currently searched for and analyzed
      */
-    public final static ISearchableVerb searchVerb = PouringVerb.POUR;
+    public final static ISearchableVerb searchVerb = CuttingVerb.DICE;
     /**
      * The parent category used for exclusion through the {@link GlobalSettings#CATEGORY_EXCLUSION} flag
      */
