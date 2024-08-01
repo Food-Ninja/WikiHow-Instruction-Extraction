@@ -1,15 +1,15 @@
 package analysis;
 
 import model.WikiHowStep;
-import model.verbs.PickOrPlaceVerb;
+import model.verbs.ISearchableVerb;
 import utils.OccurrenceChecker;
 
 import java.util.ArrayList;
 
-public class PickNPlaceAnalyzer {
-    public static void analyzeHyponyms(ArrayList<WikiHowStep> steps) {
-        System.out.println("Starting the Pick'n'Place Hyponym Analysis...");
-        for (PickOrPlaceVerb verb : PickOrPlaceVerb.values()) {
+public class VerbHyponymCountAnalyzer {
+    public static void analyzeHyponyms(ArrayList<WikiHowStep> steps, ISearchableVerb[] verbs) {
+        System.out.printf("Starting the %s Hyponym Analysis...\n", verbs.getClass().getSimpleName());
+        for (ISearchableVerb verb : verbs) {
             int descCount = 0;
             int methCount = 0;
             int headCount = 0;
@@ -32,8 +32,8 @@ public class PickNPlaceAnalyzer {
                     tiDescCount++;
                 }
             }
-
-            System.out.printf("%s; %d; %d; %d; %d; %d%n", verb.getPresentForm(), titleCount, tiDescCount, methCount, headCount, descCount);
+            int sum = titleCount + tiDescCount + methCount + headCount + descCount;
+            System.out.printf("%s, %d, %d, %d, %d, %d, %d%n", verb.getPresentForm(), titleCount, tiDescCount, methCount, headCount, descCount, sum);
         }
     }
 }

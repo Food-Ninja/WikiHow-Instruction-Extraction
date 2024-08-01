@@ -4,7 +4,7 @@ import io.ResultVisualizer;
 import io.StepFilter;
 import model.DeconstructedStepSentence;
 import model.WikiHowStep;
-import model.verbs.CuttingVerb;
+import model.verbs.*;
 import nlp.CoreferenceResolver;
 import nlp.PoSTagger;
 import nlp.SentencePartsExtractor;
@@ -25,11 +25,11 @@ public class ExtractionStarter {
 
         ArrayList<WikiHowStep> unfilteredSteps = reader.extractStepsFromFiles();
         if(args.length > 0 && args[0].equals("hyponyms")) {
-            CuttingVerbAnalyzer.analyzeHyponyms(unfilteredSteps);
+            VerbHyponymCountAnalyzer.analyzeHyponyms(unfilteredSteps, CuttingVerbWordVerbNet.values());
 
             if(!GlobalSettings.OVERVIEW_EXTRACTION) {
                 ArrayList<DeconstructedStepSentence> sentences = new ArrayList<>();
-                for (CuttingVerb verb : CuttingVerb.values()) {
+                for (CuttingVerbWordVerbNet verb : CuttingVerbWordVerbNet.values()) {
                     ArrayList<WikiHowStep> steps = StepFilter.filterGivenSteps(unfilteredSteps, verb);
                     sentences.addAll(SentencePartsExtractor.deconstructStepsIntoSentenceParts(steps, verb));
                 }
@@ -39,12 +39,12 @@ public class ExtractionStarter {
         }
 
         if(args.length > 0 && args[0].equals("pouring")) {
-            PouringVerbAnalyzer.analyzeHyponyms(unfilteredSteps);
+            VerbHyponymCountAnalyzer.analyzeHyponyms(unfilteredSteps, PouringVerb.values());
             return;
         }
 
         if(args.length > 0 && args[0].equals("pickplace")) {
-            PickNPlaceAnalyzer.analyzeHyponyms(unfilteredSteps);
+            VerbHyponymCountAnalyzer.analyzeHyponyms(unfilteredSteps, PickOrPlaceVerb.values());
             return;
         }
 
