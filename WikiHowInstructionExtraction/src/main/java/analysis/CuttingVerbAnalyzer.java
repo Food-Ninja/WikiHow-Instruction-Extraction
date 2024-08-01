@@ -1,7 +1,7 @@
 package analysis;
 
-import model.verbs.CuttingVerb;
 import model.WikiHowStep;
+import model.verbs.CuttingVerbWordVerbNet;
 import utils.OccurrenceChecker;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class CuttingVerbAnalyzer {
     public static void analyzeHyponyms(ArrayList<WikiHowStep> steps) {
         System.out.println("Starting the Cutting Hyponym Analysis...");
-        for (CuttingVerb verb : CuttingVerb.values()) {
+        for (CuttingVerbWordVerbNet verb : CuttingVerbWordVerbNet.values()) {
             int descCount = 0;
             int methCount = 0;
             int headCount = 0;
